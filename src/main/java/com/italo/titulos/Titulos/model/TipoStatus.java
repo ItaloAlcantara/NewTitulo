@@ -3,7 +3,9 @@ package com.italo.titulos.Titulos.model;
 public enum TipoStatus {
 
 	ATIVO("Ativo"),
-	DESATIVADO("Desativado");
+	DESATIVADO("Desativado"),
+	PENDENTE("Pendente"),
+	RECEBIDO("Recebido");
 	
 	private final String descricao;
 	

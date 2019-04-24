@@ -22,12 +22,15 @@ public abstract class EntityBase implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	private Calendar dataInclusao;
-	@Temporal(TemporalType.DATE)
+	
+	@Temporal(TemporalType.TIMESTAMP)
 	private Calendar dataEdicao;
-	@Temporal(TemporalType.DATE)
+	
+	@Temporal(TemporalType.TIMESTAMP)
 	private Calendar dataExclusao;
+	
 	@Enumerated(EnumType.STRING)
 	private TipoStatus status;
 	

@@ -1,13 +1,17 @@
 package com.italo.titulos.Titulos.model;
 
 import java.math.BigDecimal;
+import java.util.Calendar;
 
 import javax.persistence.Entity;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.DecimalMax;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.NumberFormat;
 
 import com.italo.titulos.Titulos.EntityBase.EntityBase;
@@ -26,6 +30,10 @@ public class Titulo extends EntityBase {
 	@DecimalMax(value = "99999999999.99" )
 	@NumberFormat(pattern="#,##0.00")
 	private BigDecimal valor;
+	
+	@DateTimeFormat(pattern="dd/MM/yyyy")
+	@Temporal(TemporalType.DATE)
+	private Calendar dataVencimento;
 
 	public String getDescricao() {
 		return descricao;
@@ -41,6 +49,14 @@ public class Titulo extends EntityBase {
 
 	public void setValor(BigDecimal valor) {
 		this.valor = valor;
+	}
+
+	public Calendar getDataVencimento() {
+		return dataVencimento;
+	}
+
+	public void setDataVencimento(Calendar dataVencimento) {
+		this.dataVencimento = dataVencimento;
 	}
 	
 	
