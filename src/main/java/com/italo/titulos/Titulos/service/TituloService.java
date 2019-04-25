@@ -3,6 +3,7 @@ package com.italo.titulos.Titulos.service;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
@@ -24,8 +25,7 @@ public class TituloService {
 	@Autowired
 	private TituloRepository tituloRepository;
 	
-	public ModelAndView salvar(Titulo titulo) {
-		
+	public ModelAndView salvar(Titulo titulo) {		
 		ModelAndView mv =new ModelAndView(VIEW_CADASTRO);
 		mv.addObject("menssagem","titulo salvo com sucesso!");
 		Titulo tituloDB=titulo;
@@ -39,5 +39,7 @@ public class TituloService {
 		return mv;
 	}
 	
-	
+	public List<TipoStatus> tipoStatusTitulo(){
+		return Arrays.asList(TipoStatus.values()).stream().filter(status -> !status.equals(TipoStatus.DESATIVADO)).collect(Collectors.toList());
+	}
 }

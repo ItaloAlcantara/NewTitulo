@@ -1,7 +1,8 @@
 package com.italo.titulos.Titulos.controller;
 
-import java.util.Arrays;
+
 import java.util.List;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,7 +23,7 @@ public class TituloController {
 	@Autowired
 	private TituloService tituloService;
 	
-	@GetMapping
+	@GetMapping("/novo")
 	public ModelAndView index(Titulo titulo) {
 		return tituloService.Titulos(titulo);
 	}
@@ -31,8 +32,14 @@ public class TituloController {
 	public ModelAndView salvar(Titulo titulo) {
 		return tituloService.salvar(titulo);
 	}
+	
 	@ModelAttribute("tipoStatus")
 	public List<TipoStatus> tipoStatusTitulo(){
-		return Arrays.asList(TipoStatus.values());
+		return tituloService.tipoStatusTitulo();
+	}
+	
+	@GetMapping()
+	public String TitulosCadastrados() {
+		return "PesquisaTitulos";
 	}
 }
