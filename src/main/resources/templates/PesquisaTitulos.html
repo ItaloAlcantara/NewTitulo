@@ -33,12 +33,26 @@
 		 				<th>Descrição</th>
 		 				<th class="text-center com-md-2">Data de Vencimento</th>
 		 				<th class="text-right com-md-2">Valor</th>
+		 				<th class="text-center com-md-2">Status</th>
 		 				<th class="text-center com-md-1"></th>
 		 			</tr>
 	 			</thead>
 	 			<tbody>
+	 				<tr th:each="titulo :${titulos}">
+	 					
+		 				
+		 				<td class="text-center com-md-1" th:text="${titulo.id}">#</td>
+		 				<td th:text="${titulo.descricao}">Descrição</td>
+		 				<td class="text-center com-md-2" th:text="${{titulo.dataVencimento}}">Data de Vencimento</td>
+		 				<td class="text-right com-md-2" th:text="${{titulo.valor}}">Valor</td>
+		 				<td class="text-center com-md-2" th:text="${titulo.status.descricao}">
+		 					<span class="label" 
+		 						th:classappend="${titulo.pendente : 'label-danger':'label-success'}"></span>
+		 				</td>
+		 				<td class="text-center com-md-1" ></td>
+	 				</tr>
 	 				<tr>
-	 					<td colspan="6">Nenhum Titulo foi encontrado</td>
+	 					<td colspan="6" th:if="${#lists.isEmpty(titulos)}">Nenhum Titulo foi encontrado</td>
 	 				</tr>
 	 			</tbody>
 	 		</table>

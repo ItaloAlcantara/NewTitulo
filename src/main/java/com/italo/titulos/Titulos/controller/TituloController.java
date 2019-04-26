@@ -6,11 +6,14 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.italo.titulos.Titulos.model.TipoStatus;
 import com.italo.titulos.Titulos.model.Titulo;
@@ -29,8 +32,8 @@ public class TituloController {
 	}
 	
 	@PostMapping
-	public ModelAndView salvar(Titulo titulo) {
-		return tituloService.salvar(titulo);
+	public String salvar(Titulo titulo,RedirectAttributes attributes) {
+		return tituloService.salvar(titulo,attributes);
 	}
 	
 	@ModelAttribute("tipoStatus")
@@ -39,7 +42,7 @@ public class TituloController {
 	}
 	
 	@GetMapping()
-	public String TitulosCadastrados() {
-		return "PesquisaTitulos";
+	public ModelAndView TitulosCadastrados(Titulo titulo) {
+		return tituloService.ListarTodosTitulos(titulo);
 	}
 }
