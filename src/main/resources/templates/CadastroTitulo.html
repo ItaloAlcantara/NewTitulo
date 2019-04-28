@@ -56,7 +56,7 @@
   	<div class="form-group" >
   		<label for="dataVencimento" class="col-sm-2 control-label">Data de Vencimento</label>
   		<div class="col-sm-4">
-  			<input type="text" class="form-control" id="dataVencimento" name="dataVencimento"placeholder="dd/mm/yyyy"/>
+  			<input type="text" class="form-control" id="dataVencimento" name="dataVencimento"placeholder="dd/mm/yyyy" th:field="*{dataVencimento}"/>
   		</div>
   	</div>
   	<div class="form-group"  th:classappend="${#fields.hasErrors('valor')} ? has-error">

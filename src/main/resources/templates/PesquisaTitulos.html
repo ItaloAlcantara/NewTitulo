@@ -24,8 +24,11 @@
 	<div class="panel panel-default">
 	 		<div class="panel-heading">
 	  			<h3>Titulos</h3>
+	  			 <a class="btn btn-link aw-link-panel" href="/titulos/novo">Novo Titulo</a>
+	   			</div>
 	 		</div>
 	 	<div class="panel-body">
+	 		
 	 		<table class="table table-bordered table-striped">
 	 			<thead>
 	 				<tr>
@@ -49,7 +52,11 @@
 		 					<span class="label" 
 		 						th:classappend="${titulo.pendente : 'label-danger':'label-success'}"></span>
 		 				</td>
-		 				<td class="text-center com-md-1" ></td>
+		 				<td class="text-center com-md-1" >
+		 					<a class="btn btn-link btn-xs" th:href="@{/titulos/{id}(id=${titulo.id})}">
+		 						<span class="glyphicon glyphicon-pencil" ></span> 
+		 					</a>
+		 				</td>
 	 				</tr>
 	 				<tr>
 	 					<td colspan="6" th:if="${#lists.isEmpty(titulos)}">Nenhum Titulo foi encontrado</td>

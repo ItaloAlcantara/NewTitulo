@@ -10,6 +10,7 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -34,9 +35,8 @@ public class TituloService {
 	public String salvar(Titulo titulo, RedirectAttributes attributes) {		
 		ModelAndView mv =new ModelAndView(VIEW_CADASTRO);
 		attributes.addFlashAttribute("menssagem","titulo salvo com sucesso!");				
-		Titulo tituloDB=titulo;
-		tituloDB.setDataInclusao(Calendar.getInstance());
-		tituloRepository.save(tituloDB);
+		titulo.setDataInclusao(Calendar.getInstance());
+		tituloRepository.save(titulo);
 		return "redirect:/titulos/novo";
 	}
 
@@ -49,7 +49,14 @@ public class TituloService {
 	 public ModelAndView ListarTodosTitulos(Titulo titulo) {
 		 ModelAndView mv =new ModelAndView(VIEW_LISTAR);
 		 List<Titulo> titulos= (List<Titulo>) tituloRepository.findAll();
+		 Arrays.asList(titulos.stream().filter(tituloDesativado -> !tituloDesativado.equals(TipoStatus.DESATIVADO)).collect(Collectors.toList()));
 		 mv.addObject("titulos",titulos);
+		 return mv;
+	 }
+	 public ModelAndView Editar(Titulo titulo) {
+		 ModelAndView mv = new ModelAndView(VIEW_CADASTRO);
+		 titulo.setDataEdicao(Calendar.getInstance());
+		 mv.addObject(titulo);
 		 return mv;
 	 }
 	
