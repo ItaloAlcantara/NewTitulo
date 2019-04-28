@@ -27,6 +27,7 @@ public class TituloService {
 	
 	private static final String VIEW_CADASTRO=("CadastroTitulo");
 	private static final String VIEW_LISTAR=("PesquisaTitulos");
+	private static final String OPERACAO_CONCLUIDA=("Operação realizada com sucesso!");
 	SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 	
 	@Autowired
@@ -36,7 +37,7 @@ public class TituloService {
 	
 	public String salvar(Titulo titulo, RedirectAttributes attributes) {		
 		ModelAndView mv =new ModelAndView(VIEW_CADASTRO);
-		attributes.addFlashAttribute("menssagem","titulo salvo com sucesso!");				
+		attributes.addFlashAttribute("menssagem",OPERACAO_CONCLUIDA);				
 		titulo.setDataInclusao(Calendar.getInstance());
 		tituloRepository.save(titulo);
 		return "redirect:/titulos/novo";
@@ -55,17 +56,19 @@ public class TituloService {
 		 mv.addObject("titulos",titulos);
 		 return mv;
 	 }
-	 public ModelAndView Editar(Titulo titulo) {
+	 public ModelAndView Editar(Titulo titulo , RedirectAttributes attributes) {
 		 ModelAndView mv = new ModelAndView(VIEW_CADASTRO);
 		 titulo.setDataEdicao(Calendar.getInstance());
 		 mv.addObject(titulo);
+		 attributes.addFlashAttribute("menssagem",OPERACAO_CONCLUIDA);
 		 return mv;
 	 }
 	 
-	 public String Excluir(Titulo titulo) {
+	 public String Excluir(Titulo titulo,RedirectAttributes attributes) {
 		 titulo.setDataExclusao(Calendar.getInstance());
 		 titulo.setStatus(TipoStatus.DESATIVADO);
 		 titulo.setDataEdicao(Calendar.getInstance());
+		 attributes.addFlashAttribute("mensagem",OPERACAO_CONCLUIDA);
 		 return "redirect:/titulos";
 	 }
 	

@@ -21,6 +21,9 @@
 	            </div>
 	        </div>
 	</nav>
+	<div class="alert alert-success" th:if="${!#strings.isEmpty(menssagem)}">
+		<span th:text="${menssagem}"></span>
+	</div>
 	<div class="panel panel-default">
 	 		<div class="panel-heading">
 	  			<h3>Titulos</h3>
@@ -70,7 +73,7 @@
 	 	</div>
 <div class="modal fade" id="confirmacaoExclusaoModal" tabindex="-1" data-keyboard="false" data-backdrop="static">
 	<div class="modal-dialog">
-		<form action="/titulos" method="POST">
+		<form th:attr="data-url-base='/titulos'" method="POST">
 			<input type="hidden" name="_method" value="DELETE"/> 
 			
 			<div class="modal-content">

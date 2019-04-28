@@ -38,13 +38,13 @@ public class TituloController {
 	}
 	
 	@RequestMapping("{id}")
-	public ModelAndView editar(@PathVariable("id") Titulo titulo) {
-		return tituloService.Editar(titulo);
+	public ModelAndView editar(@PathVariable("id") Titulo titulo,RedirectAttributes attributes) {
+		return tituloService.Editar(titulo,attributes);
 	}
 	
 	@RequestMapping(value="{id}",method = RequestMethod.DELETE)
-	public String exluir(@PathVariable("id") Titulo titulo) {
-		return tituloService.Excluir(titulo);
+	public String exluir(@PathVariable("id") Titulo titulo,RedirectAttributes attributes) {
+		return tituloService.Excluir(titulo,attributes);
 	}
 	
 	@ModelAttribute("tipoStatus")
