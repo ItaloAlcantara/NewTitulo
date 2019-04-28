@@ -10,6 +10,8 @@ import javax.validation.constraints.DecimalMax;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.NumberFormat;
 import com.italo.titulos.Titulos.EntityBase.EntityBase;
@@ -20,11 +22,12 @@ public class Titulo extends EntityBase {
 
 	private static final long serialVersionUID = 1L;
 	
-	
+	@NotNull
+	@Size
 	private String descricao;
 	
 	
-	@NotNull(message="Campo é obrigatorio!")
+	@NotNull
 	@DecimalMin(value="0.01", message = "Valor deve ser maior que 1 centavo")
 	@DecimalMax(value = "99999999999.99" )
 	@NumberFormat(pattern="#,##0.00")

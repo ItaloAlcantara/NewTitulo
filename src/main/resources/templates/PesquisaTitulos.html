@@ -56,6 +56,10 @@
 		 					<a class="btn btn-link btn-xs" th:href="@{/titulos/{id}(id=${titulo.id})}">
 		 						<span class="glyphicon glyphicon-pencil" ></span> 
 		 					</a>
+		 					<a class="btn btn-link btn-xs" data-toggle="modal" data-target="#confirmacaoExclusaoModal" 
+		 					th:attr="data-id=${titulo.id}">
+		 						<span class="glyphicon glyphicon-remove" ></span> 
+		 					</a>
 		 				</td>
 	 				</tr>
 	 				<tr>
@@ -64,9 +68,31 @@
 	 			</tbody>
 	 		</table>
 	 	</div>
- 	</div>
-
+<div class="modal fade" id="confirmacaoExclusaoModal" tabindex="-1" data-keyboard="false" data-backdrop="static">
+	<div class="modal-dialog">
+		<form action="/titulos" method="POST">
+			<input type="hidden" name="_method" value="DELETE"/> 
+			
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">Você tem certeza?</h4>
+				</div>
+				
+				<div class="modal-body">
+					<span>Tem certeza que deseja apagar o título?</span>
+				</div>
+				
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>
+					<button type="submit" class="btn btn-danger">Excluir</button>
+				</div>
+			</div>
+		 </form>
+	</div>
+</div>
+ 	
 <script src="/js/jQuery.js"></script>
+<script src="/js/cobranca.js"></script>
 <script src="/js/bootstrap.min.js"></script>
 </body>
 </html>

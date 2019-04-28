@@ -16,7 +16,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.italo.titulos.Titulos.model.TipoStatus;
 import com.italo.titulos.Titulos.model.Titulo;
-import com.italo.titulos.Titulos.repository.TituloRepository;
+import com.italo.titulos.Titulos.repository.TitulosRepository;
+
+
 
 
 @Service
@@ -28,7 +30,7 @@ public class TituloService {
 	SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 	
 	@Autowired
-	private TituloRepository tituloRepository;
+	private TitulosRepository tituloRepository;
 	@InitBinder
 	
 	
@@ -48,8 +50,8 @@ public class TituloService {
 	
 	 public ModelAndView ListarTodosTitulos(Titulo titulo) {
 		 ModelAndView mv =new ModelAndView(VIEW_LISTAR);
-		 List<Titulo> titulos= (List<Titulo>) tituloRepository.findAll();
-		 Arrays.asList(titulos.stream().filter(tituloDesativado -> !tituloDesativado.equals(TipoStatus.DESATIVADO)).collect(Collectors.toList()));
+		 
+		 List<Titulo> titulos= (List<Titulo>) tituloRepository.findByDataExclusaoIsNull();		 
 		 mv.addObject("titulos",titulos);
 		 return mv;
 	 }
@@ -59,8 +61,19 @@ public class TituloService {
 		 mv.addObject(titulo);
 		 return mv;
 	 }
+	 
+	 public String Excluir(Titulo titulo) {
+		 titulo.setDataExclusao(Calendar.getInstance());
+		 titulo.setStatus(TipoStatus.DESATIVADO);
+		 titulo.setDataEdicao(Calendar.getInstance());
+		 return "redirect:/titulos";
+	 }
 	
 	public List<TipoStatus> tipoStatusTitulo(){
 		return Arrays.asList(TipoStatus.values()).stream().filter(status -> !status.equals(TipoStatus.DESATIVADO)).collect(Collectors.toList());
 	}
+	
+	
+	
+	
 }
