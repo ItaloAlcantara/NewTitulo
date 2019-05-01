@@ -8,6 +8,7 @@
 <meta charset="UTF-8" />
 <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css"/>
 <link rel="stylesheet" type="text/css" href="/css/style.css"/>
+<link rel="stylesheet" type="text/css" href="/css/datapicker.css"/>
 <title>Cadastro de titulo</title>
 
 
@@ -56,14 +57,15 @@
   	<div class="form-group" >
   		<label for="dataVencimento" class="col-sm-2 control-label">Data de Vencimento</label>
   		<div class="col-sm-4">
-  			<input type="text" class="form-control" id="dataVencimento" name="dataVencimento"placeholder="dd/mm/yyyy" th:field="*{dataVencimento}"/>
+  			<input type="text" class="form-control" id="dataVencimento" name="dataVencimento"placeholder="dd/mm/yyyy" th:field="*{dataVencimento}"
+  			data-provide="datepicker" data-date-format="dd/mm/yyyy" data-date-language="pt-BR" data-date-autoclose="true" data-date-today-highlight="true"/>
   		</div>
   	</div>
   	<div class="form-group"  th:classappend="${#fields.hasErrors('valor')} ? has-error">
   		<label for="valor" class="col-sm-2 control-label">Valor</label>
 	  	<div class="col-sm-4">
 	  		
-	  		<input type="text" class="form-control" id="valor" name="valor" th:field="*{valor}"/>
+	  		<input type="text" class="form-control js-currency" id="valor" name="valor" th:field="*{valor}"/>
 	  	</div>  		
   	</div>
   	<div class="form-group">
@@ -84,7 +86,10 @@
   </div>
 </div>
 </form>
-<script src="/js/jQuery.js"></script>	
+<script src="/js/jQuery.js"></script>
+<script src="/js/money.js"></script>	
+<script src="/js/datapicker.js"></script>
+<script src="/js/datapickerBR.js"></script>	
 <script src="/js/bootstrap.min.js"></script>
 </body>
 </html>

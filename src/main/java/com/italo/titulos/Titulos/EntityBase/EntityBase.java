@@ -90,8 +90,5 @@ public abstract class EntityBase implements Serializable{
 	
 	public boolean isPendente() {
 		return TipoStatus.PENDENTE.equals(this.status);
-	}
-	
-	
-	
+	}		
 }

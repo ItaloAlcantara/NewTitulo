@@ -1,14 +1,20 @@
 package com.italo.titulos.Titulos.service;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.servlet.ModelAndView;
@@ -39,8 +45,13 @@ public class TituloService {
 		ModelAndView mv =new ModelAndView(VIEW_CADASTRO);
 		attributes.addFlashAttribute("menssagem",OPERACAO_CONCLUIDA);				
 		titulo.setDataInclusao(Calendar.getInstance());
-		tituloRepository.save(titulo);
+		try{tituloRepository.save(titulo);
 		return "redirect:/titulos/novo";
+		}catch (DataIntegrityViolationException e) {
+			e.getMessage();
+			return VIEW_CADASTRO;
+		}
+		
 	}
 
 	public ModelAndView Titulos(Titulo titulo) {
@@ -53,7 +64,7 @@ public class TituloService {
 		 ModelAndView mv =new ModelAndView(VIEW_LISTAR);
 		 
 		 List<Titulo> titulos= (List<Titulo>) tituloRepository.findByDataExclusaoIsNull();		 
-		 mv.addObject("titulos",titulos);
+		 mv.addObject("titulos",VerificaDataVencimento(titulos));
 		 return mv;
 	 }
 	 public ModelAndView Editar(Titulo titulo , RedirectAttributes attributes) {
@@ -71,6 +82,20 @@ public class TituloService {
 		 attributes.addFlashAttribute("mensagem",OPERACAO_CONCLUIDA);
 		 return "redirect:/titulos";
 	 }
+	 
+	
+	  public List<Titulo> VerificaDataVencimento(List<Titulo> titulos) { 
+	
+		for(Titulo t: titulos.stream().filter(vencimento -> vencimento.getDataVencimento().compareTo(Calendar.getInstance()) < 0 && vencimento.getStatus().equals(TipoStatus.ATIVO)).collect(Collectors.toList())) {
+			t.setStatus(TipoStatus.PENDENTE);
+		}			
+			return titulos;
+		}
+		  
+		  
+		  
+	  
+	 
 	
 	public List<TipoStatus> tipoStatusTitulo(){
 		return Arrays.asList(TipoStatus.values()).stream().filter(status -> !status.equals(TipoStatus.DESATIVADO)).collect(Collectors.toList());

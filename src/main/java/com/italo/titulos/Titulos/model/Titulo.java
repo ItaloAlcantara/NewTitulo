@@ -99,6 +99,12 @@ public class Titulo extends EntityBase {
 		return true;
 	}
 	
+	public boolean vencido(Titulo titulo) {
+		if( getDataVencimento().compareTo(Calendar.getInstance()) >0) {
+			return true;
+		}
+		return false;
+	}
 	
 	
 	
