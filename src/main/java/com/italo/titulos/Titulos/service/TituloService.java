@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -86,13 +87,16 @@ public class TituloService {
 	
 	  public List<Titulo> VerificaDataVencimento(List<Titulo> titulos) { 
 	
-		for(Titulo t: titulos.stream().filter(vencimento -> vencimento.getDataVencimento().compareTo(Calendar.getInstance()) < 0 && vencimento.getStatus().equals(TipoStatus.ATIVO)).collect(Collectors.toList())) {
-			t.setStatus(TipoStatus.PENDENTE);
-		}			
+		  titulos.stream().filter(vencimento -> vencimento.getDataVencimento().compareTo(Calendar.getInstance()) < 0 && vencimento.getStatus().equals(TipoStatus.ATIVO)).forEach(ttitulo ->ttitulo.setStatus(TipoStatus.PENDENTE));			
 			return titulos;
 		}
 		  
-		  
+	public ModelAndView pesquisaTitulosPorDescricao(String descricao) {
+		List<Titulo> titulos = tituloRepository.pesquisaTitulosPorDescricao(descricao);
+		ModelAndView mv = new ModelAndView(VIEW_LISTAR);
+		mv.addObject("titulos",titulos);
+		return mv;
+	}  
 		  
 	  
 	 
