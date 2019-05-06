@@ -1,5 +1,8 @@
 package com.italo.titulos.Titulos.model;
 
+import javax.persistence.Entity;
+
+@Entity
 public class Usuario extends Pessoa {
 
 	private static final long serialVersionUID = 1L;
