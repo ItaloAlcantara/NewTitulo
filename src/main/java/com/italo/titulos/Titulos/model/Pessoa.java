@@ -5,7 +5,11 @@ import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 import com.italo.titulos.Titulos.EntityBase.EntityBase;
 @Entity
@@ -14,13 +18,15 @@ public class Pessoa extends EntityBase {
 	private static final long serialVersionUID = 1L;
 	@NotNull
 	private String nome;
+	@DateTimeFormat(pattern="dd/MM/yyyy")
+	@Temporal(TemporalType.DATE)	
 	private Calendar dataNascimento;
-	@OneToMany(mappedBy = "pessoa")
+	/*@OneToMany(mappedBy = "pessoa")
 	private List<Telefone> telefones;
 	@OneToMany(mappedBy = "pessoa")
 	private List<Email> emails;
 	@OneToMany(mappedBy = "pessoa")
-	private List<Documento> documentos;
+	private List<Documento> documentos;*/
 	
 	public String getNome() {
 		return nome;
@@ -34,7 +40,7 @@ public class Pessoa extends EntityBase {
 	public void setDataNascimento(Calendar dataNascimento) {
 		this.dataNascimento = dataNascimento;
 	}
-	public List<Telefone> getTelefones() {
+	/*public List<Telefone> getTelefones() {
 		return telefones;
 	}
 	public void setTelefones(List<Telefone> telefones) {
@@ -98,7 +104,7 @@ public class Pessoa extends EntityBase {
 		} else if (!telefones.equals(other.telefones))
 			return false;
 		return true;
-	}
+	}*/
 	
 	
 

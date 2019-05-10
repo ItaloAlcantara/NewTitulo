@@ -4,7 +4,9 @@ import java.util.Calendar;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -14,6 +16,7 @@ import com.italo.titulos.Titulos.repository.PessoaRepository;
 
 
 @Service
+@Transactional
 public class PessoaService {
 	
 	@Autowired
@@ -23,19 +26,27 @@ public class PessoaService {
 	private static final String VIEW_LISTAR=("PesquisaPessoa");
 	private static final String OPERACAO_CONCLUIDA=("Operação realizada com sucesso!");
 	
-	public ModelAndView pessoas(Pessoa pessoa) {
+	public ModelAndView pessoas() {
 		ModelAndView mv = new ModelAndView(VIEW_LISTAR);
 		List<Pessoa> pessoas = (List<Pessoa>)pessoaRepository.findAll().stream().filter(pessoax -> !pessoax.isDesativado());
 		mv.addObject("pessoas", pessoas);
 		return mv;
 	}
-	
+	public ModelAndView pessoa(Pessoa pessoa) {
+		ModelAndView mv =new ModelAndView(VIEW_CADASTRO);
+		mv.addObject(new Pessoa());
+		return mv;
+	}	
 	public String adicionarPessoa(Pessoa pessoa, RedirectAttributes attributes) {
 		ModelAndView mv = new ModelAndView(VIEW_CADASTRO);
 		attributes.addFlashAttribute("menssagem",OPERACAO_CONCLUIDA);	
 		pessoa.setDataInclusao(Calendar.getInstance());
-		pessoaRepository.save(pessoa);		
+		try{pessoaRepository.save(pessoa);
 		return "redirect:/pessoa/novo";
+		}catch (DataIntegrityViolationException e) {
+			e.getMessage();
+			return VIEW_CADASTRO;
+		}
 	}
 	
 	public String excluirPessoa(Pessoa pessoa, RedirectAttributes redirectAttributes) {

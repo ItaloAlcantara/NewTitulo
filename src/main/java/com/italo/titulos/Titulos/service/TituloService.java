@@ -61,13 +61,6 @@ public class TituloService {
 		return mv;
 	}
 	
-	 public ModelAndView ListarTodosTitulos(Titulo titulo) {
-		 ModelAndView mv =new ModelAndView(VIEW_LISTAR);
-		 
-		 List<Titulo> titulos= (List<Titulo>) tituloRepository.findByDataExclusaoIsNull();		 
-		 mv.addObject("titulos",VerificaDataVencimento(titulos));
-		 return mv;
-	 }
 	 public ModelAndView Editar(Titulo titulo , RedirectAttributes attributes) {
 		 ModelAndView mv = new ModelAndView(VIEW_CADASTRO);
 		 titulo.setDataEdicao(Calendar.getInstance());
@@ -87,14 +80,14 @@ public class TituloService {
 	
 	  public List<Titulo> VerificaDataVencimento(List<Titulo> titulos) { 
 	
-		  titulos.stream().filter(vencimento -> vencimento.getDataVencimento().compareTo(Calendar.getInstance()) < 0 && vencimento.getStatus().equals(TipoStatus.ATIVO)).forEach(ttitulo ->ttitulo.setStatus(TipoStatus.PENDENTE));			
+		  titulos.stream().filter(vencimento -> vencimento.getDataVencimento().compareTo(Calendar.getInstance()) < 0 && vencimento.getStatus().equals(TipoStatus.ATIVO)).forEach(vencimento ->vencimento.setStatus(TipoStatus.PENDENTE));			
 			return titulos;
 		}
 		  
 	public ModelAndView pesquisaTitulosPorDescricao(String descricao) {
 		List<Titulo> titulos = tituloRepository.pesquisaTitulosPorDescricao(descricao);
 		ModelAndView mv = new ModelAndView(VIEW_LISTAR);
-		mv.addObject("titulos",titulos);
+		mv.addObject("titulos",VerificaDataVencimento(titulos));
 		return mv;
 	}  
 		  
