@@ -1,5 +1,6 @@
 package com.italo.titulos.Titulos.security;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -13,9 +14,16 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 import org.springframework.util.AntPathMatcher;
 
+import com.italo.titulos.Titulos.service.UsuarioService;
+
+
+
 @Configuration
 @EnableWebSecurity
 public class WebConfigSecurity extends WebSecurityConfigurerAdapter{
+	
+	@Autowired
+	private UsuarioService usuarioService;
 	
 	@Override//Configura as solicitacoes de acesso via Http
 	protected void configure(HttpSecurity http) throws Exception {
@@ -31,10 +39,10 @@ public class WebConfigSecurity extends WebSecurityConfigurerAdapter{
 	
 	@Override//cria autenticacao do usuario no BD ou em memoria
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		auth.inMemoryAuthentication().passwordEncoder(new BCryptPasswordEncoder())
-		.withUser("italo")
-		.password("$2a$10$JHRYyYNM6eJydmqHbPK/T.atvgSr0x1L5VVpOtLtdMJV85TQlHiXO")
-		.roles("ADMIN");
+		
+		auth.userDetailsService(usuarioService)
+		.passwordEncoder(new BCryptPasswordEncoder());
+		
 	}
 	
 	@Override //ignora url especificas
